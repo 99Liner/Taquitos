@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Reciept Page</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <h1>Thank you for Visiting TAQUITOS!</h1>
+        <div class="Title-container">
+        
+        <label id="val1"></label>
+        <label id="val2"></label><br>
+
+        <h1>Your Order Receipt</h1>
+
+        <h2>You Have Ordered:</h2>
+        <ul id="selectedMeals">
+            <!-- jQuery will populate this list -->
+        </ul>
+        <hr class="new1">
+        <h2>Customer Name</h2>
+    
+        <a href="order.html">
+            <button class="btn" name="btnHome">Order Again 🌮</button>
+        </a>
+        <a href="index.html">
+            <button class="btn" name="btnHome">Back Home  🏠</button>
+        </a>
+        </div>
+    </body>
+
+    <script>
+        $(document).ready(function() {
+            let cart = localStorage.getItem('cart');
+            const selectedMeals = $("#selectedMeals");
+            
+            if(cart){
+                cart = JSON.parse(cart);
+
+                console.log(cart);
+
+                // Add cart items underl #selectedMeals
+                selectedMeals.append('<li>' + cart[0]["meal"] + '</li>');
+
+                cart[1]["sides"].forEach(side => {
+                    selectedMeals.append('<li>' + side + '</li>');
+                })
+
+                selectedMeals.append('<li>' + cart[2]["drink"] + '</li>');
+
+                selectedMeals.append('<li>' + cart[3]["name"] + '</li>');
+            }
+        });
+    </script>
+</html>
+
+<Style>
+body {
+    background-image: url("Fajitas.jpg");
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif; /* For a playful look */
+    color: #00522B; 
+    text-align: center;
+}
+/*Reciept Container*/
+.Title-container {
+    background-color: #eea5de;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+h1 {
+    color: #FFD700;
+    text-shadow: 2px 2px #B22222;
+}
+
+h2 {
+    color: #228B22;
+    margin-top: 20px;
+}
+/*Underline of customer name*/
+hr.new1 {
+  border: 5px solid green;
+  border-radius: 5px;
+  text-align: center;
+  width: 15%;
+  padding: 0px;
+}
+
+ul {
+    list-style-type: none; /*Eliminates Bullet points*/
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px; 
+    font-size: 30px; /*Receipt font sizing */
+}
+
+.btn {
+    background-color: #009B3A; /* Mexican green color */
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center; 
+    border-radius: 5px;
+    margin-right: 80px;
+    margin-left: 80px;
+}
+.btn:hover {
+    background-color: #00522B; /* ForestGreen */
+}
+
+label {
+    display: block; /* To ensure each label is on a new line */
+    font-size: 20px;
+    margin: 10px 0;
+}
+</Style>

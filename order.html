@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Order Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <a href="index.html">
+        <button class="btn" name="btnHome">Back Home 🔙</button>
+    </a><h1>TAQUITOS</h1>
+    <h2>AUTHENTIC TEX-MEX FOOD</h2>
+    <div class="Title-container">
+        <p>By Denice Jaquez</p>
+    </div>
+    
+ 
+    <div class="split left">
+
+        <div>
+        <h3>CHOOSE A MEAL:    🍽️</h3>
+        <select name="food" id="foodSel">
+            <option value="empty"> </option>
+            <option value="tacos" name="tacos"><label for="tacos"  title="$8.99">Tacos</label></option>
+            <option value="fajitas" name="fajitas"><label for="fajitas" title="$15.99">Fajitas</label></option>
+            <option value="nachos" name="nachos"><label for="nachos" title="$12.99">Nachos</label></option>
+        </select>
+        </div>
+
+        <h3>SELECT YOUR SIDES: </h3>
+        <p>(You can choose more than one!)</p>
+        <div id="sidesSel">
+            <input type="checkbox" name="checkbox1" id="checkbox1">
+            <label for="checkbox1" title="$2.99">Guacamole</label><br>
+
+            <input type="checkbox" name="checkbox2" id="checkbox2">
+            <label for="checkbox2" title="$1.99">Chips</label><br>
+
+            <input type="checkbox" name="checkbox3" id="checkbox3">
+            <label for="checkbox3" title="$4.99">Cheese Dip</label><br>
+
+            <input type="checkbox" name="checkbox4" id="checkbox4">
+            <label for="checkbox4" title="$3.99">Pico de Gallo</label><br>
+
+            <input type="checkbox" name="checkbox5" id="checkbox5">
+            <label for="checkbox5" title="$5.99">Rice & Beans</label><br>
+        </div>
+
+        <h3>PICK YOUR DRINK:    🥤</h3>
+        <div class="btnGroup" role="group" id="drinkSel">
+            <input  type="radio" name="drinkOptions" id="btnRadio1"><label for="btnRadio1" title="$1.99">Coke</label><br>
+            <input  type="radio" name="drinkOptions" id="btnRadio2"><label for="btnRadio2" title="$1.99">Sprite</label><br>
+            <input  type="radio" name="drinkOptions" id="btnRadio3"><label for="btnRadio3" title="$1.99">Dr.Pepper</label><br>
+            <input  type="radio" name="drinkOptions" id="btnRadio4"><label for="btnRadio4" title="Free">Water</label><br>
+        </div>
+
+            <h3>What is the name for the order? Type Here: </h3>
+            <input type="text" id="name">
+            <button class="btn" name="Checkout" id="goToReceipt">Checkout</button>
+    </div>
+
+    <div class="split right">
+        <div class="centered column">
+            <img src="Tacoos.jpg"><label title="$8.99">Tacos</label>
+            <img src="Fajitas.jpg"><label title="$14.99">Fajitas</label>
+            <img src="nachos.jpg" alt="Nachos"><label title="$12.99">Nachos</label>
+        </div>
+        </div>
+</body>
+
+<script>
+    $(window).on('load', function() {
+        // Initialize an empty cart object
+        let cart = [];
+
+
+        // Redirect to receipt page
+        $('#goToReceipt').on('click', function(e) {
+            e.preventDefault();
+
+            // Get Meal Selection
+            let meal = $('#foodSel').find(":selected").text();
+            cart.push({"meal": meal});
+
+            // Add Sides
+            sides = [];
+            $("#sidesSel input[type='checkbox']:checked").each(function() {
+                var labelForCheckbox = $("label[for='" + this.id + "']").text();
+                sides.push(labelForCheckbox);
+            });
+            cart.push({"sides": sides});
+
+            // Add Drinks
+            $("#drinkSel input[name='drinkOptions']:checked").each(function() {
+                var labelForCheckbox = $("label[for='" + this.id + "']").text();
+                cart.push({"drink": labelForCheckbox});
+            });
+
+            // Add Name
+            cart.push({"name": $("#name").val().toUpperCase()})
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            window.location.href = 'success.html';
+        });
+    });
+</script>
+</html>
+
+<style>
+    /* Inline CSS here */
+    body {
+        background-color: #eee; /* Mexican pink */
+        font-family: 'Arial', sans-serif;
+        margin-inline-end: 30px;
+        margin-inline-start: 30px;
+        margin-bottom: 30px;
+    }
+
+    h1 {
+        color: #e4007c; 
+        font-family: 'Helvetica Neue', sans-serif; 
+        font-size: 70px; 
+        font-weight: bold; 
+        letter-spacing: -1px; 
+        line-height: 0; 
+        text-align: center;
+    }
+
+    h2 {
+        color: #e4007c; 
+        font-family: 'Helvetica Neue', sans-serif; 
+        font-size: 40px; 
+        font-weight: bold; 
+        letter-spacing: -1px; 
+        line-height: 1; 
+        text-align: center;
+    }
+
+    h3 {
+        color: #00522B; 
+        font-family: 'Helvetica Neue', sans-serif; 
+        font-size: 18px; 
+        font-weight: bold; 
+        text-align: left;
+        margin-top: 80px;
+    }
+
+    p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+    .btn {
+        background-color: #009B3A; /* Mexican green color */
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        text-align: center; 
+        border-radius: 5px;
+    }
+    .btn:hover {
+        background-color: #00522B; /* Darker green on hover */
+    }
+    /* Style the select element */
+    #foodSel {
+    border: 2px solid #FF83A1; /* Pink */
+    background-color: #E6F0F3;
+    color: #111;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 18px;
+    width: 150px;
+    border-radius: 5px;
+    cursor: pointer;
+    appearance: none; /* Remove default styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-shadow: 0 0 10px 0 #FF83A1; /* Pink shadow */
+    margin-inline-start: 20px;
+    }
+    /* Style the checkbox and radio container */
+#sidesSel, #drinkSel {
+    background-color: #E6F0F3;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #FF83A1;
+    margin-inline-start: 20px;
+    width: 50%;
+}
+/* Style the labels of the checkboxes and radio buttons */
+label {
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+}
+/* Style the checkboxes and radio buttons */
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 10px;
+    cursor: pointer;
+    appearance: none; /* Remove default styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 2px solid #00522B;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+/* Style the checked state */
+input[type="checkbox"]:checked, input[type="radio"]:checked {
+    background-color: #009B3A;
+}
+
+#name {
+    width: 30%;
+    padding: 10px;
+    margin-inline-end: 20px;
+    border: 1px solid #009B3A;
+    border-radius: 5px; /* Slightly rounded corners */
+    font-size: 16px;
+    margin-inline-start: 20px;
+}
+
+.left {
+    position: relative;
+    width: 50%; /* Adjust the width as needed */
+    float: left; 
+}
+
+.right {
+    position: relative;
+    width: 50%; /* Adjust the width as needed */
+    float: right;
+}
+
+.centered {
+    max-width: 100%; /* Ensure the image fits within the container */
+    height: auto; /* Maintain the image's aspect ratio */
+}
+
+.centered img {
+    max-width: 100%; /* Ensure the image fits within the container */
+    height: auto; /* Maintain the image's aspect ratio */
+}
+    </style>
+
